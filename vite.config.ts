@@ -1,5 +1,5 @@
 import path from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import generateSitemap from 'vite-ssg-sitemap'
@@ -13,10 +13,13 @@ import Inspect from 'vite-plugin-inspect'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
+import { VarletUIResolver } from 'unplugin-vue-components/resolvers'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
-export default defineConfig({
+export default ({
+	mode
+}) => { return defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -57,6 +60,7 @@ export default defineConfig({
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       dts: 'src/components.d.ts',
+	  resolvers: [VarletUIResolver()],
     }),
 
     // https://github.com/antfu/unocss
@@ -86,8 +90,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],
       manifest: {
-        name: 'Vitesse',
-        short_name: 'Vitesse',
+        name: 'BCT-Vitesse',
+        short_name: 'BCT-Vitesse',
         theme_color: '#ffffff',
         icons: [
           {
@@ -137,4 +141,10 @@ export default defineConfig({
       inline: ['@vue', '@vueuse', 'vue-demi'],
     },
   },
+  server: {
+    host: '0.0.0.0',
+	port: loadEnv(mode, process.cwd()).VITE_APP_PORT
+  }
+  
 })
+}

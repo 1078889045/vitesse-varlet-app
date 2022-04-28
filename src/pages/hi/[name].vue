@@ -1,14 +1,37 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
+// import { demoListApi } from '~/api/demo/table';
+// import { DemoListItem } from '~/api/demo/table/model/tableModel';
 
 const props = defineProps<{ name: string }>()
 const router = useRouter()
 const user = useUserStore()
 const { t } = useI18n()
 
-watchEffect(() => {
-  user.setNewName(props.name)
-})
+// watchEffect(() => {
+//   user.setNewName(props.name)
+// })
+
+// try {
+//   const response = await demoListApi({
+//   	page: 2,
+//   	pageSize: 5,
+//   });
+  
+//   const {
+//     items
+//   } = response;
+  
+//   console.log(items)
+  
+// } catch (e) {
+
+//   //异常处理
+// } finally {
+
+  
+// }
+
 </script>
 
 <template>
@@ -47,3 +70,8 @@ watchEffect(() => {
     </div>
   </div>
 </template>
+
+<route lang="yaml">
+meta:
+  layout: default
+</route>

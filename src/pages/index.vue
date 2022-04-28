@@ -1,26 +1,52 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
+import logo from '/favicon.svg'
+import { Snackbar } from '@varlet/ui'
+
+const loading = ref(false)
 
 const user = useUserStore()
 const name = $ref(user.savedName)
 
 const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
+const go = async () => {
+  loading.value = true;
+  
+  await user.setNewName(name)
+  loading.value = false;
+  
+  //console.log(name);
+  
+  if(user.savedToken) {
+	  console.log(user.savedToken)
+	  Snackbar({ type: 'info', content: user.savedToken, contentClass: 'word-break', vertical: true, duration: 5000})
+  }
+  
+  if (user.savedName)
+     router.push(`/hi/${encodeURIComponent(user.savedName)}`)
+  
 }
 
 const { t } = useI18n()
 </script>
 
 <template>
+  <var-loading description="loading...." type="cube" :loading="loading">
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
+    <div text-4xl flex justify-center>
+      <!-- <div i-carbon-campsite inline-block /> -->
+	  <var-image 
+	        
+	        height="100px" 
+	        fit="contain"
+			radius="10"
+			ripple
+	        :src="logo"
+	      />
     </div>
     <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
+      <a rel="noreferrer" href="http://www.bct-best3.com" target="_blank">
+        BCT
       </a>
     </p>
     <p>
@@ -56,7 +82,14 @@ const { t } = useI18n()
       </button>
     </div>
   </div>
+  </var-loading>
 </template>
+
+<style>
+	.word-break {
+		word-break: break-word;
+	}
+</style>
 
 <route lang="yaml">
 meta:

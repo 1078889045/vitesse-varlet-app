@@ -17,10 +17,38 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    presetIcons({
-      scale: 1.2,
-      warn: true,
-    }),
+    // presetIcons({
+    //   scale: 1.2,
+    //   warn: true,
+    // }),
+	presetIcons({
+	  customizations: {
+		iconCustomizer(collection, icon, props) {
+		  // customize all icons in this collection  
+		  if (collection === 'my-other-icons') {
+			props.width = '4em'
+			props.height = '4em'
+		  }
+		  // customize this icon in this collection
+		  if (collection === 'my-icons' && icon === 'account') {
+			props.width = '6em'
+			props.height = '6em'
+		  }
+		  // customize this @iconify icon in this collection  
+		  if (collection === 'mdi' && icon === 'account') {
+			props.width = '2em'
+			props.height = '2em'
+		  }
+		  
+		  if(collection === 'carbon') {
+			props.width = '2em'
+			props.height = '2em'  
+			props.fontweight = 'border'
+		  }
+		  
+		}
+	  }
+	}),
     presetTypography(),
     presetWebFonts({
       fonts: {

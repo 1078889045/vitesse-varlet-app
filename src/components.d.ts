@@ -5,11 +5,20 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AboutHeader: typeof import('./components/AboutHeader.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
+    Header: typeof import('./components/Header.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VarAppBar: typeof import('@varlet/ui')['_AppBarComponent']
+    VarButton: typeof import('@varlet/ui')['_ButtonComponent']
+    VarCell: typeof import('@varlet/ui')['_CellComponent']
+    VarIcon: typeof import('@varlet/ui')['_IconComponent']
+    VarImage: typeof import('@varlet/ui')['_ImageComponent']
+    VarLoading: typeof import('@varlet/ui')['_LoadingComponent']
+    VarMenu: typeof import('@varlet/ui')['_MenuComponent']
   }
 }
 
